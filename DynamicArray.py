@@ -6,7 +6,7 @@ class DynamicArray:
         """Creates the array with a default cap of 1"""
         self.__n = 0
         self.__capacity = 1
-        self.__A = []
+        self.__A = self.__make_array(self.__capacity)
 
     def __str__(self):
         """To-String"""
@@ -24,7 +24,7 @@ class DynamicArray:
 
     def __len__(self):
         """Returns the length of the array"""
-        return len(self.__A)
+        return self.__n
 
     def __getitem__(self, index):
         """Return element at index"""
@@ -40,15 +40,18 @@ class DynamicArray:
     def __resize(self):
         """Changes the capacity of the array when we reach max capacity"""
         self.__capacity *= 2
+        tempArr = self.__make_array(self.__capacity)
+
+        for i, item in enumerate(self.__A):
+            tempArr[i] = item
+        self.__A = tempArr
 
     def append(self, element):
         """Add a new element to the array and increase __n + 1 and increase __capacity if needed"""
         if self.__capacity == self.__n:
             self.__resize()
 
-        tempArr = self.__A + [element]
-        self.__A = self.__make_array(self.__capacity)
-        self.__A = tempArr
+        self.__A[self.__n] = element
         self.__n += 1
 
     def get_cap(self):
